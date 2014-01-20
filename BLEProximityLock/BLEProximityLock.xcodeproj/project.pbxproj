@@ -21,6 +21,7 @@
 		CC3955FD188DC966006E308D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3955DF188DC966006E308D /* UIKit.framework */; };
 		CC395605188DC966006E308D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC395603188DC966006E308D /* InfoPlist.strings */; };
 		CC395607188DC967006E308D /* BLEProximityLockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC395606188DC966006E308D /* BLEProximityLockTests.m */; };
+		CC395611188DCF62006E308D /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC395610188DCF62006E308D /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		CC395602188DC966006E308D /* BLEProximityLockTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BLEProximityLockTests-Info.plist"; sourceTree = "<group>"; };
 		CC395604188DC966006E308D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CC395606188DC966006E308D /* BLEProximityLockTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEProximityLockTests.m; sourceTree = "<group>"; };
+		CC395610188DCF62006E308D /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC395611188DCF62006E308D /* CoreBluetooth.framework in Frameworks */,
 				CC3955DE188DC966006E308D /* CoreGraphics.framework in Frameworks */,
 				CC3955E0188DC966006E308D /* UIKit.framework in Frameworks */,
 				CC3955DC188DC966006E308D /* Foundation.framework in Frameworks */,
@@ -101,6 +104,7 @@
 		CC3955DA188DC966006E308D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CC395610188DCF62006E308D /* CoreBluetooth.framework */,
 				CC3955DB188DC966006E308D /* Foundation.framework */,
 				CC3955DD188DC966006E308D /* CoreGraphics.framework */,
 				CC3955DF188DC966006E308D /* UIKit.framework */,
