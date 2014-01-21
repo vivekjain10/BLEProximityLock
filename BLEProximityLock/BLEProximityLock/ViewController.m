@@ -64,8 +64,20 @@
                   RSSI:(NSNumber *)RSSI
 {
     [self.centralManager stopScan];
-    NSLog(@"Discovered %@ at %@ with data %@", peripheral.name, RSSI, advertisementData);
     
+    NSString *rfduinoAdvertisementData = nil;
+
+    id manufacturerData = [advertisementData objectForKey:CBAdvertisementDataManufacturerDataKey];
+    if (manufacturerData) {
+        const uint8_t *bytes = [manufacturerData bytes];
+        int len = [manufacturerData length];
+        // skip manufacturer uuid
+        NSData *data = [NSData dataWithBytes:bytes+2 length:len-2];
+        rfduinoAdvertisementData = [NSString stringWithUTF8String:[data bytes]];
+    }
+
+    NSLog(@"Discovered %@ at %@ with data %@", peripheral.name, RSSI, rfduinoAdvertisementData);
+
     if(self.peripheral != peripheral) {
         self.peripheral = peripheral;
         [self.centralManager connectPeripheral:peripheral options:nil];

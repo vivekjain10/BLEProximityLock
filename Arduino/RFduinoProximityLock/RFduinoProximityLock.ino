@@ -2,10 +2,10 @@
 
 void setup() {
   Serial.begin(9600);
-  RFduinoBLE.begin();
-  RFduinoBLE.deviceName = "BLEProximityLock";
+  RFduinoBLE.deviceName = "BLELock";
   RFduinoBLE.advertisementInterval = 100; //100ms 
-  RFduinoBLE.advertisementData = "0D624DEF-E885-4C3A-88B3-28B2554A5E71";
+  RFduinoBLE.advertisementData = "0D624DE";
+  RFduinoBLE.begin();
 }
 
 void loop() {
