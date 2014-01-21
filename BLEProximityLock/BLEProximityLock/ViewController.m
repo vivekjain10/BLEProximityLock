@@ -9,6 +9,9 @@
 #import "ViewController.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 
+static NSString *kLockId = @"0D624DE";
+static NSString *kKeyId = @"34C";
+
 @interface ViewController() <CBCentralManagerDelegate, CBPeripheralDelegate> {
 @private
     CBUUID *service_uuid;
@@ -78,6 +81,8 @@
 
     NSLog(@"Discovered %@ at %@ with data %@", peripheral.name, RSSI, rfduinoAdvertisementData);
 
+    if(![kLockId isEqualToString:rfduinoAdvertisementData]) return;
+
     if(self.peripheral != peripheral) {
         self.peripheral = peripheral;
         [self.centralManager connectPeripheral:peripheral options:nil];
@@ -138,7 +143,7 @@
     
     for (CBCharacteristic *characterstic in service.characteristics) {
         if([characterstic.UUID isEqual:send_uuid]) {
-            [peripheral writeValue:[@"34C1644F-248D-4935-91B0-5AB84154CD00" dataUsingEncoding:NSUTF8StringEncoding]
+            [peripheral writeValue:[kKeyId dataUsingEncoding:NSUTF8StringEncoding]
                  forCharacteristic:characterstic
                               type:CBCharacteristicWriteWithoutResponse];
         }

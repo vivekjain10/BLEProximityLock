@@ -1,10 +1,13 @@
 #include <RFduinoBLE.h>
 
+const char *lockId = "0D624DE";
+const char *validKey = "34C";
+
 void setup() {
   Serial.begin(9600);
   RFduinoBLE.deviceName = "BLELock";
   RFduinoBLE.advertisementInterval = 100; //100ms 
-  RFduinoBLE.advertisementData = "0D624DE";
+  RFduinoBLE.advertisementData = lockId;
   RFduinoBLE.begin();
 }
 
@@ -17,18 +20,22 @@ void RFduinoBLE_onAdvertisement(bool start)
   if (start)
     Serial.println("Started Advertising!");
   else
-    Serial.println("Stopped Advertising");
+    Serial.println("Stopped Advertising!");
 }
 
 //returns the dBm signal strength after connecting 
 void RFduinoBLE_onRSSI(int rssi)
 {
-  Serial.println(rssi);
+//  Serial.println(rssi);
 }
 
 //data from the radio
-void RFduinoBLE_onReceive(char *data, int len)
+void RFduinoBLE_onReceive(char *key, int len)
 {
-  Serial.println(data);
+  Serial.println(key);
+  if(!strcmp(key, validKey))
+    Serial.println("un-lock");
+  else
+    Serial.println("lock");
 } 
 
