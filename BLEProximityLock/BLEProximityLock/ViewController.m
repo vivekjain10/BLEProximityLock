@@ -109,6 +109,7 @@ static NSString *kKeyId = @"34C";
 {
     NSLog(@"Peripheral disconnected");
     self.peripheral = nil;
+    [self scan];
 }
 
 - (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary *)dict
