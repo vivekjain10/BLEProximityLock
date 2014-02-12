@@ -6,7 +6,7 @@
 #define LED_RED 2
 #define LED_BLUE 4
 
-#define MIN_RSSI_FOR_BLUE -45
+#define MIN_RSSI_FOR_BLUE -50
 #define MAX_RSSI_FOR_RED -60
 #define MAX_COUNT 3
 
@@ -89,6 +89,16 @@ void RFduinoBLE_onReceive(char *key, int len)
     Serial.println("invalid key");
     validKeyInRange = false;
   }
+}
+
+void RFduinoBLE_onConnect(){
+  Serial.println("On Connect");
+  led_off();
+}
+
+void RFduinoBLE_onDisconnect(){
+  Serial.println("On Disconnect");
+  led_off();
 }
 
 void led(int pin)
