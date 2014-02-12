@@ -1,15 +1,20 @@
 #include <RFduinoBLE.h>
 
-#define LOCK_ID "0D624DE"
-#define KEY "34C"
+#define ADVERTISEMENT_DATA "0D624DE"
+#define ACCESS_KEY "34C"
 
 #define LED_RED 2
 #define LED_BLUE 4
 
 #define MIN_RSSI_FOR_BLUE -45
-#define MAX_RSSI_FOR_RED -70
+#define MAX_RSSI_FOR_RED -60
+#define MAX_COUNT 3
 
 boolean validKeyInRange = false;
+boolean blueLedOn = false;
+boolean redLedOn = false;
+int closeCount = 0;
+int farCount = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -19,7 +24,7 @@ void setup() {
 
   RFduinoBLE.deviceName = "BLELock";
   RFduinoBLE.advertisementInterval = 100; //100ms 
-  RFduinoBLE.advertisementData = LOCK_ID;
+  RFduinoBLE.advertisementData = ADVERTISEMENT_DATA;
   RFduinoBLE.begin();
 }
 
@@ -40,36 +45,50 @@ void RFduinoBLE_onRSSI(int rssi)
   if(validKeyInRange)
   {
     Serial.println(rssi);
-    if(rssi > MIN_RSSI_FOR_BLUE)
-      led_blue();
-    else if(rssi < MAX_RSSI_FOR_RED)
-      led_red();
+
+    // Connected device is very close
+    if(rssi > MIN_RSSI_FOR_BLUE) {
+      if(closeCount == MAX_COUNT) {
+        if(!blueLedOn)
+        {
+          led(LED_BLUE);
+          blueLedOn = true;
+          redLedOn = false;
+        }
+      } else {
+        closeCount++;
+        farCount=0;
+      }
+    }
+    else if(rssi < MAX_RSSI_FOR_RED) // Connected device is far
+    {
+      if(farCount == MAX_COUNT) {
+        if (!redLedOn) {
+          led(LED_RED);
+          redLedOn = true;
+          blueLedOn = false;
+        }
+      } else {
+        farCount++;
+        closeCount=0;
+      }
+    } else { // Connected device in ambiguous range (neither close nor far)
+      closeCount = 0;
+      farCount = 0;
+    }
   }
 }
 
 void RFduinoBLE_onReceive(char *key, int len)
 {
   Serial.println(key);
-  if(!strcmp(key, KEY))
-  {
+  if(!strcmp(key, ACCESS_KEY)) {
     Serial.println("valid key");
     validKeyInRange = true;
-  }
-  else
-  {
+  } else {
     Serial.println("invalid key");
     validKeyInRange = false;
   }
-}
-
-void led_red()
-{
-  led(LED_RED);
-}
-
-void led_blue()
-{
-  led(LED_BLUE);
 }
 
 void led(int pin)
