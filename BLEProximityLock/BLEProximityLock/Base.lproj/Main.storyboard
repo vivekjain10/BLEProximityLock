@@ -28,16 +28,36 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XXXXXXX" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="usd-9l-k7c">
+                                <rect key="frame" x="123" y="527" width="74" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Device ID:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y18-0G-KAZ">
+                                <rect key="frame" x="39" y="527" width="113" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="113" id="lcI-2M-kxM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Y18-0G-KAZ" secondAttribute="bottom" constant="20" symbolic="YES" id="4Ts-FI-KXi"/>
                             <constraint firstAttribute="centerY" secondItem="wzG-q3-QXd" secondAttribute="centerY" id="6oX-is-F9p"/>
+                            <constraint firstItem="usd-9l-k7c" firstAttribute="leading" secondItem="Y18-0G-KAZ" secondAttribute="trailing" constant="-29" id="Gar-Rn-CdJ"/>
                             <constraint firstAttribute="centerX" secondItem="wzG-q3-QXd" secondAttribute="centerX" id="ffD-Ce-iJe"/>
                             <constraint firstItem="qCN-UJ-Bs5" firstAttribute="centerY" secondItem="wzG-q3-QXd" secondAttribute="centerY" id="gPF-k9-bI5"/>
+                            <constraint firstItem="usd-9l-k7c" firstAttribute="baseline" secondItem="Y18-0G-KAZ" secondAttribute="baseline" id="pfV-UA-BTr"/>
+                            <constraint firstItem="usd-9l-k7c" firstAttribute="centerX" secondItem="wzG-q3-QXd" secondAttribute="centerX" id="wvC-fl-yOq"/>
                             <constraint firstItem="wzG-q3-QXd" firstAttribute="leading" secondItem="qCN-UJ-Bs5" secondAttribute="trailing" constant="5" id="y28-iZ-CfT"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="deviceIDField" destination="usd-9l-k7c" id="nLj-aw-7JM"/>
                         <outlet property="statusField" destination="wzG-q3-QXd" id="2y3-Q0-Gdp"/>
                     </connections>
                 </viewController>

@@ -22,6 +22,7 @@
 @property (strong, nonatomic) CBCentralManager *centralManager;
 @property (strong, nonatomic) CBPeripheral *peripheral;
 @property (weak, nonatomic) IBOutlet UILabel *statusField;
+@property (weak, nonatomic) IBOutlet UILabel *deviceIDField;
 
 @end
 
@@ -30,9 +31,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     deviceID = [[NSUserDefaults standardUserDefaults] stringForKey:@"device_id"];
+    if(deviceID == nil) {
+        deviceID = @"0D624DE";
+    }
+
     key = [[NSUserDefaults standardUserDefaults] stringForKey:@"key"];
-    
+    if(key == nil) {
+        key = @"34C";
+    }
+
+    self.deviceIDField.text = deviceID;
 
     serviceUUID = [CBUUID UUIDWithString:@"2220"];
     sendUUID = [CBUUID UUIDWithString:@"2222"];
