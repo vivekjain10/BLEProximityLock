@@ -52,6 +52,7 @@ void RFduinoBLE_onRSSI(int rssi)
         if(!blueLedOn)
         {
           led(LED_BLUE);
+          RFduinoBLE.send(1);
           blueLedOn = true;
           redLedOn = false;
         }
@@ -65,6 +66,7 @@ void RFduinoBLE_onRSSI(int rssi)
       if(farCount == MAX_COUNT) {
         if (!redLedOn) {
           led(LED_RED);
+          RFduinoBLE.send(0);
           redLedOn = true;
           blueLedOn = false;
         }

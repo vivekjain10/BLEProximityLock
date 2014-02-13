@@ -160,11 +160,26 @@
         return;
     }
     
-    for (CBCharacteristic *characterstic in service.characteristics) {
-        if([characterstic.UUID isEqual:sendUUID]) {
+    for (CBCharacteristic *characteristic in service.characteristics) {
+        if([characteristic.UUID isEqual:sendUUID]) {
             [peripheral writeValue:[key dataUsingEncoding:NSUTF8StringEncoding]
-                 forCharacteristic:characterstic
+                 forCharacteristic:characteristic
                               type:CBCharacteristicWriteWithoutResponse];
+        }
+        else if([characteristic.UUID isEqual:receiveUUID]) {
+            [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+        }
+    }
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    if([characteristic.UUID isEqual:receiveUUID]) {
+        const uint8_t *value = [characteristic.value bytes];
+        if(value[0]) {
+            [self updateStatus:@"Peripheral Close"];
+        } else {
+            [self updateStatus:@"Peripheral Far"];
         }
     }
 }
