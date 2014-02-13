@@ -11,11 +11,11 @@
 
 @interface ViewController() <CBCentralManagerDelegate, CBPeripheralDelegate> {
 @private
-    CBUUID *service_uuid;
-    CBUUID *send_uuid;
-    CBUUID *receive_uuid;
-    CBUUID *disconnect_uuid;
-    NSString *deviceId;
+    CBUUID *serviceUUID;
+    CBUUID *sendUUID;
+    CBUUID *receiveUUID;
+    CBUUID *disconnectUUID;
+    NSString *deviceID;
     NSString *key;
 }
 
@@ -30,14 +30,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    deviceId = [[NSUserDefaults standardUserDefaults] stringForKey:@"device_id"];
+    deviceID = [[NSUserDefaults standardUserDefaults] stringForKey:@"device_id"];
     key = [[NSUserDefaults standardUserDefaults] stringForKey:@"key"];
     
 
-    service_uuid = [CBUUID UUIDWithString:@"2220"];
-    send_uuid = [CBUUID UUIDWithString:@"2222"];
-    receive_uuid = [CBUUID UUIDWithString:@"2221"];
-    disconnect_uuid = [CBUUID UUIDWithString:@"2223"];
+    serviceUUID = [CBUUID UUIDWithString:@"2220"];
+    sendUUID = [CBUUID UUIDWithString:@"2222"];
+    receiveUUID = [CBUUID UUIDWithString:@"2221"];
+    disconnectUUID = [CBUUID UUIDWithString:@"2223"];
 
     self.centralManager = [[CBCentralManager alloc] initWithDelegate:self
                                                                queue:nil
@@ -75,13 +75,13 @@
     id manufacturerData = [advertisementData objectForKey:CBAdvertisementDataManufacturerDataKey];
     if (manufacturerData) {
         const uint8_t *bytes = [manufacturerData bytes];
-        int len = [manufacturerData length];
+        NSUInteger len = [manufacturerData length];
         // skip manufacturer uuid
         NSData *data = [NSData dataWithBytes:bytes+2 length:len-2];
         rfduinoAdvertisementData = [NSString stringWithUTF8String:[data bytes]];
     }
 
-    if(![deviceId isEqualToString:rfduinoAdvertisementData]) {
+    if(![deviceID isEqualToString:rfduinoAdvertisementData]) {
         [self updateStatus:@"Peripheral Mismatched"];
         return;
     }
@@ -107,7 +107,7 @@
     [self updateStatus:@"Peripheral Connected"];
     
     peripheral.delegate = self;
-    [peripheral discoverServices:@[service_uuid]];
+    [peripheral discoverServices:@[serviceUUID]];
 }
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral
@@ -135,7 +135,7 @@
     }
     
     for (CBService *service in peripheral.services) {
-        [peripheral discoverCharacteristics:@[receive_uuid, send_uuid, disconnect_uuid]
+        [peripheral discoverCharacteristics:@[receiveUUID, sendUUID, disconnectUUID]
                                  forService:service];
     }
 }
@@ -151,7 +151,7 @@
     }
     
     for (CBCharacteristic *characterstic in service.characteristics) {
-        if([characterstic.UUID isEqual:send_uuid]) {
+        if([characterstic.UUID isEqual:sendUUID]) {
             [peripheral writeValue:[key dataUsingEncoding:NSUTF8StringEncoding]
                  forCharacteristic:characterstic
                               type:CBCharacteristicWriteWithoutResponse];
@@ -162,7 +162,7 @@
 #pragma mark - Private Methods
 - (void)scan
 {
-    [self.centralManager scanForPeripheralsWithServices:@[service_uuid]
+    [self.centralManager scanForPeripheralsWithServices:@[serviceUUID]
                                                 options:@{CBCentralManagerScanOptionAllowDuplicatesKey: @YES}];
 }
 
