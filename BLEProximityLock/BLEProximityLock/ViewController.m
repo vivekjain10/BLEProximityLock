@@ -22,6 +22,7 @@ static NSString *kKeyId = @"34C";
 
 @property (strong, nonatomic) CBCentralManager *centralManager;
 @property (strong, nonatomic) CBPeripheral *peripheral;
+@property (weak, nonatomic) IBOutlet UILabel *statusField;
 
 @end
 
@@ -53,11 +54,10 @@ static NSString *kKeyId = @"34C";
 {
     if(central.state != CBCentralManagerStatePoweredOn)
     {
-        NSLog(@"Bluetooth is not Powered ON");
+        [self updateStatus:@"No Bluetooth"];
         return;
     }
-    
-    NSLog(@"Bluetooth is ON");
+
     [self scan];
 }
 
@@ -79,9 +79,12 @@ static NSString *kKeyId = @"34C";
         rfduinoAdvertisementData = [NSString stringWithUTF8String:[data bytes]];
     }
 
-    NSLog(@"Discovered %@ at %@ with data %@", peripheral.name, RSSI, rfduinoAdvertisementData);
+    if(![kLockId isEqualToString:rfduinoAdvertisementData]) {
+        [self updateStatus:@"Peripheral Mismatched"];
+        return;
+    }
 
-    if(![kLockId isEqualToString:rfduinoAdvertisementData]) return;
+    [self updateStatus:@"Peripheral Matched"];
 
     if(self.peripheral != peripheral) {
         self.peripheral = peripheral;
@@ -93,12 +96,13 @@ static NSString *kKeyId = @"34C";
                  error:(NSError *)error
 {
     NSLog(@"Failed to connect to %@. (%@)", peripheral, [error localizedDescription]);
+    [self updateStatus:@"Connection Failed"];
     [self cleanup];
 }
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
-    NSLog(@"Peripheral connected");
+    [self updateStatus:@"Peripheral Connected"];
     
     peripheral.delegate = self;
     [peripheral discoverServices:@[service_uuid]];
@@ -107,7 +111,7 @@ static NSString *kKeyId = @"34C";
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral
                  error:(NSError *)error
 {
-    NSLog(@"Peripheral disconnected");
+    [self updateStatus:@"Peripheral Disconnected"];
     self.peripheral = nil;
     [self scan];
 }
@@ -123,6 +127,7 @@ static NSString *kKeyId = @"34C";
 {
     if (error) {
         NSLog(@"Error discovering services: %@", [error localizedDescription]);
+        [self updateStatus:@"Service Discovery Error"];
         [self cleanup];
         return;
     }
@@ -138,6 +143,7 @@ static NSString *kKeyId = @"34C";
 {
     if (error) {
         NSLog(@"Error discovering characteristics: %@", [error localizedDescription]);
+        [self updateStatus:@"Characteristic Discovery Error"];
         [self cleanup];
         return;
     }
@@ -164,6 +170,11 @@ static NSString *kKeyId = @"34C";
         return;
     }
     [self.centralManager cancelPeripheralConnection:self.peripheral];
+}
+
+- (void)updateStatus:(NSString *)status
+{
+    [self.statusField setText:status];
 }
 
 @end
