@@ -9,15 +9,14 @@
 #import "ViewController.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 
-static NSString *kLockId = @"0D624DE";
-static NSString *kKeyId = @"34C";
-
 @interface ViewController() <CBCentralManagerDelegate, CBPeripheralDelegate> {
 @private
     CBUUID *service_uuid;
     CBUUID *send_uuid;
     CBUUID *receive_uuid;
     CBUUID *disconnect_uuid;
+    NSString *deviceId;
+    NSString *key;
 }
 
 @property (strong, nonatomic) CBCentralManager *centralManager;
@@ -31,6 +30,9 @@ static NSString *kKeyId = @"34C";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    deviceId = [[NSUserDefaults standardUserDefaults] stringForKey:@"device_id"];
+    key = [[NSUserDefaults standardUserDefaults] stringForKey:@"key"];
+    
 
     service_uuid = [CBUUID UUIDWithString:@"2220"];
     send_uuid = [CBUUID UUIDWithString:@"2222"];
@@ -79,7 +81,7 @@ static NSString *kKeyId = @"34C";
         rfduinoAdvertisementData = [NSString stringWithUTF8String:[data bytes]];
     }
 
-    if(![kLockId isEqualToString:rfduinoAdvertisementData]) {
+    if(![deviceId isEqualToString:rfduinoAdvertisementData]) {
         [self updateStatus:@"Peripheral Mismatched"];
         return;
     }
@@ -150,7 +152,7 @@ static NSString *kKeyId = @"34C";
     
     for (CBCharacteristic *characterstic in service.characteristics) {
         if([characterstic.UUID isEqual:send_uuid]) {
-            [peripheral writeValue:[kKeyId dataUsingEncoding:NSUTF8StringEncoding]
+            [peripheral writeValue:[key dataUsingEncoding:NSUTF8StringEncoding]
                  forCharacteristic:characterstic
                               type:CBCharacteristicWriteWithoutResponse];
         }

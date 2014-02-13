@@ -22,6 +22,7 @@
 		CC395605188DC966006E308D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC395603188DC966006E308D /* InfoPlist.strings */; };
 		CC395607188DC967006E308D /* BLEProximityLockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC395606188DC966006E308D /* BLEProximityLockTests.m */; };
 		CC395611188DCF62006E308D /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC395610188DCF62006E308D /* CoreBluetooth.framework */; };
+		CCA5174E18AC58AE00386C0C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CCA5174D18AC58AE00386C0C /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CC3955D8188DC966006E308D /* BLEProximityLock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEProximityLock.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC3955D8188DC966006E308D /* BLEProximity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEProximity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC3955DB188DC966006E308D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CC3955DD188DC966006E308D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		CC3955DF188DC966006E308D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -55,6 +56,7 @@
 		CC395604188DC966006E308D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CC395606188DC966006E308D /* BLEProximityLockTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEProximityLockTests.m; sourceTree = "<group>"; };
 		CC395610188DCF62006E308D /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		CCA5174D18AC58AE00386C0C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		CC3955CF188DC966006E308D = {
 			isa = PBXGroup;
 			children = (
+				CCA5174D18AC58AE00386C0C /* Settings.bundle */,
 				CC3955E1188DC966006E308D /* BLEProximityLock */,
 				CC395600188DC966006E308D /* BLEProximityLockTests */,
 				CC3955DA188DC966006E308D /* Frameworks */,
@@ -95,7 +98,7 @@
 		CC3955D9188DC966006E308D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CC3955D8188DC966006E308D /* BLEProximityLock.app */,
+				CC3955D8188DC966006E308D /* BLEProximity.app */,
 				CC3955F9188DC966006E308D /* BLEProximityLockTests.xctest */,
 			);
 			name = Products;
@@ -173,7 +176,7 @@
 			);
 			name = BLEProximityLock;
 			productName = BLEProximityLock;
-			productReference = CC3955D8188DC966006E308D /* BLEProximityLock.app */;
+			productReference = CC3955D8188DC966006E308D /* BLEProximity.app */;
 			productType = "com.apple.product-type.application";
 		};
 		CC3955F8188DC966006E308D /* BLEProximityLockTests */ = {
@@ -232,6 +235,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCA5174E18AC58AE00386C0C /* Settings.bundle in Resources */,
 				CC3955F4188DC966006E308D /* Images.xcassets in Resources */,
 				CC3955E6188DC966006E308D /* InfoPlist.strings in Resources */,
 				CC3955EF188DC966006E308D /* Main.storyboard in Resources */,
@@ -385,7 +389,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BLEProximityLock/BLEProximityLock-Prefix.pch";
 				INFOPLIST_FILE = "BLEProximityLock/BLEProximityLock-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BLEProximity;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -398,7 +402,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BLEProximityLock/BLEProximityLock-Prefix.pch";
 				INFOPLIST_FILE = "BLEProximityLock/BLEProximityLock-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BLEProximity;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -464,6 +468,7 @@
 				CC39560C188DC967006E308D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CC39560D188DC967006E308D /* Build configuration list for PBXNativeTarget "BLEProximityLockTests" */ = {
 			isa = XCConfigurationList;
@@ -472,6 +477,7 @@
 				CC39560F188DC967006E308D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
